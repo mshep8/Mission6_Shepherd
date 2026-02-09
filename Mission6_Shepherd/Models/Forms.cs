@@ -1,35 +1,46 @@
+// Mary Catherine Shepherd
+// IS 413
+// Mission 6 Assignment
+
 using System.ComponentModel.DataAnnotations;
 
 namespace Mission6_Shepherd.Models.Forms;
 
+// Movie model
 public class Movie
 {
+    // Primary key
     [Key]
     [Required]
     public int MovieId { get; set; }
 
-    // REQUIRED (matches spreadsheet columns)
+    // Movie category
     [Required]
     public string Category { get; set; } = "";
 
+    // Movie title
     [Required]
     public string Title { get; set; } = "";
 
-    // Year can be "2001-2002" so store as string
+    // Movie year
     [Required]
     public string Year { get; set; } = "";
 
+    // Movie director
     [Required]
     public string Director { get; set; } = "";
 
-    // Required, but your FORM will limit choices to G/PG/PG-13/R
+    // Movie rating
     [Required]
     public string Rating { get; set; } = "";
 
-    // OPTIONAL (per instructions)
-    public bool? Edited { get; set; }      // true/false (Yes/No)
-    public string? LentTo { get; set; }    // column "Lent To"
+    // Edited yes/no
+    public bool? Edited { get; set; }
 
+    // Lent to
+    public string? LentTo { get; set; }
+
+    // Notes (max 25 chars)
     [MaxLength(25)]
-    public string? Notes { get; set; }     // max 25 chars
+    public string? Notes { get; set; }
 }
