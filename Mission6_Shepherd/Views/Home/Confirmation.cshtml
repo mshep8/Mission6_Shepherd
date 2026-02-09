@@ -1,0 +1,14 @@
+@model Mission6_Shepherd.Models.Forms.Movie
+
+<h2>Movie Added!</h2>
+
+<p><strong>Title:</strong> @Model.Title</p>
+<p><strong>Category:</strong> @Model.Category</p>
+<p><strong>Year:</strong> @Model.Year</p>
+<p><strong>Director:</strong> @Model.Director</p>
+<p><strong>Rating:</strong> @Model.Rating</p>
+<p><strong>Edited:</strong> @(Model.Edited == true ? "Yes" : "No")</p>
+<p><strong>Lent To:</strong> @Model.LentTo</p>
+<p><strong>Notes:</strong> @Model.Notes</p>
+
+<p><a asp-controller="Home" asp-action="MovieForm">Add another movie</a></p>
