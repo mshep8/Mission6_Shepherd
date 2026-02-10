@@ -1,14 +1,38 @@
+<!-- Mary Catherine Shepherd -->
+<!-- IS 413 -->
+<!-- Mission 6 -->
+
 @model Mission6_Shepherd.Models.Forms.Movie
+<!-- Tells the view what model type it is using -->
 
 <h2>Movie Added!</h2>
+<!-- Page heading shown after a movie is submitted -->
 
 <p><strong>Title:</strong> @Model.Title</p>
-<p><strong>Category:</strong> @Model.Category</p>
-<p><strong>Year:</strong> @Model.Year</p>
-<p><strong>Director:</strong> @Model.Director</p>
-<p><strong>Rating:</strong> @Model.Rating</p>
-<p><strong>Edited:</strong> @(Model.Edited == true ? "Yes" : "No")</p>
-<p><strong>Lent To:</strong> @Model.LentTo</p>
-<p><strong>Notes:</strong> @Model.Notes</p>
+<!-- Displays the movie title -->
 
-<p><a asp-controller="Home" asp-action="MovieForm">Add another movie</a></p>
+<p><strong>Category:</strong> @Model.Category</p>
+<!-- Displays the movie category -->
+
+<p><strong>Year:</strong> @Model.Year</p>
+<!-- Displays the movie release year -->
+
+<p><strong>Director:</strong> @Model.Director</p>
+<!-- Displays the movie director -->
+
+<p><strong>Rating:</strong> @Model.Rating</p>
+<!-- Displays the movie rating -->
+
+<p><strong>Edited:</strong> @(Model.Edited == true ? "Yes" : "No")</p>
+<!-- Shows Yes or No depending on whether the movie was edited -->
+
+<p><strong>Lent To:</strong> @Model.LentTo</p>
+<!-- Displays who the movie was lent to -->
+
+<p><strong>Notes:</strong> @Model.Notes</p>
+<!-- Displays any additional notes -->
+
+<p>
+    <a asp-controller="Home" asp-action="MovieForm">Add another movie</a>
+</p>
+<!-- Link that sends the user back to the movie form -->
