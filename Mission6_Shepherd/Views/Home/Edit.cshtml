@@ -4,13 +4,16 @@
 
 @model Mission6_Shepherd.Models.Movie
 
-<h1 class="mb-3">Add Movie</h1>
+<h1 class="mb-3">Edit Movie</h1>
 
 <form method="post">
-    <!-- Displays validation errors at the top if something is missing -->
+    <!-- Shows validation errors at the top -->
     <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-    <!-- Category dropdown (loaded from database) -->
+    <!-- Hidden primary key so the correct record is updated -->
+    <input type="hidden" asp-for="MovieId"/>
+
+    <!-- Category -->
     <div class="mb-3">
         <label asp-for="CategoryId" class="form-label">Category</label>
         <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
@@ -19,27 +22,27 @@
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
 
-    <!-- Required Title field -->
+    <!-- Title -->
     <div class="mb-3">
         <label asp-for="Title" class="form-label"></label>
         <input asp-for="Title" class="form-control"/>
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
-    <!-- Required Year field (must be 1888 or later) -->
+    <!-- Year -->
     <div class="mb-3">
         <label asp-for="Year" class="form-label"></label>
-        <input asp-for="Year" type="number" class="form-control" />
+        <input asp-for="Year" type="number" class="form-control"/>
         <span asp-validation-for="Year" class="text-danger"></span>
     </div>
 
-    <!-- Optional Director field -->
+    <!-- Director -->
     <div class="mb-3">
         <label asp-for="Director" class="form-label"></label>
         <input asp-for="Director" class="form-control"/>
     </div>
 
-    <!-- Rating dropdown -->
+    <!-- Rating -->
     <div class="mb-3">
         <label asp-for="Rating" class="form-label"></label>
         <select asp-for="Rating" class="form-select">
@@ -52,7 +55,7 @@
         </select>
     </div>
 
-    <!-- Edited is required (user must select Yes or No) -->
+    <!-- Edited (now requires user selection) -->
     <div class="mb-3">
         <label asp-for="Edited" class="form-label"></label>
         <select asp-for="Edited" class="form-select">
@@ -63,7 +66,7 @@
         <span asp-validation-for="Edited" class="text-danger"></span>
     </div>
 
-    <!-- CopiedToPlex is required (user must select Yes or No) -->
+    <!-- Copied To Plex (now requires user selection) -->
     <div class="mb-3">
         <label asp-for="CopiedToPlex" class="form-label"></label>
         <select asp-for="CopiedToPlex" class="form-select">
@@ -74,26 +77,24 @@
         <span asp-validation-for="CopiedToPlex" class="text-danger"></span>
     </div>
 
-    <!-- Optional Lent To field -->
+    <!-- Lent To -->
     <div class="mb-3">
         <label asp-for="LentTo" class="form-label"></label>
         <input asp-for="LentTo" class="form-control"/>
     </div>
 
-    <!-- Optional Notes field (max 25 characters from model validation) -->
+    <!-- Notes -->
     <div class="mb-3">
         <label asp-for="Notes" class="form-label"></label>
         <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
         <span asp-validation-for="Notes" class="text-danger"></span>
     </div>
 
-    <!-- Submit and Cancel buttons -->
     <button type="submit" class="btn btn-success">Save</button>
     <a class="btn btn-secondary" asp-controller="Home" asp-action="MovieList">Cancel</a>
 </form>
 
 @section Scripts {
-    <!-- Enables client-side validation -->
     <partial name="_ValidationScriptsPartial" />
 }
 

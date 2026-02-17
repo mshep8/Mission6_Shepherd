@@ -1,0 +1,11 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace Mission6_Shepherd.Views.Home;
+
+public class MovieList : PageModel
+{
+    public void OnGet()
+    {
+        
+    }
+}

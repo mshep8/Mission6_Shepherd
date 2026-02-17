@@ -1,0 +1,25 @@
+<!-- Mary Catherine Shepherd -->
+<!-- IS 413 -->
+<!-- Mission 7 -->
+
+@model Mission6_Shepherd.Models.Movie
+
+<h1 class="mb-3 text-danger">Delete Movie</h1>
+
+<!-- Warning message to confirm deletion -->
+<div class="alert alert-warning">
+    Are you sure you want to delete <strong>@Model.Title</strong> (@Model.Year)?
+</div>
+
+<!-- Form posts back to DeleteConfirmed action -->
+<form method="post" asp-controller="Home" asp-action="DeleteConfirmed">
+    
+    <!-- Hidden field sends the MovieId to the controller -->
+    <input type="hidden" name="movieId" value="@Model.MovieId" />
+    
+    <!-- Delete button -->
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+
+    <!-- Cancel button returns to movie list -->
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="MovieList">Cancel</a>
+</form>

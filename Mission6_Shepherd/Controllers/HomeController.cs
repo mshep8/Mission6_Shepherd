@@ -1,47 +1,165 @@
 // Mary Catherine Shepherd
 // IS 413
-// Mission 6 Assignment
+// Mission 7
 
 using Microsoft.AspNetCore.Mvc;
-using Mission6_Shepherd.Models.Forms;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Mission6_Shepherd.Models;
 
 namespace Mission6_Shepherd.Controllers;
 
-// Controls navigation and form submission for the site
 public class HomeController : Controller
 {
-    // Database context used to access the Movies table
+    // This connects the controller to the database
     private readonly MovieContext _context;
 
-    // Constructor: injects the database context
+    // Constructor injection so we can use the database throughout this controller
     public HomeController(MovieContext context)
     {
         _context = context;
     }
 
-    // Displays the home page
+    // Returns the home page
     public IActionResult Index() => View();
 
-    // Displays the "Get to Know Joel" page
+    // Simple informational page
     public IActionResult GetToKnowJoel() => View();
 
-    // GET: displays the movie entry form
+    // =========================
+    // LIST
+    // Displays all movies
+    // =========================
     [HttpGet]
-    public IActionResult MovieForm() => View();
+    public IActionResult MovieList()
+    {
+        // Pull movies from database and sort alphabetically by title
+        var movies = _context.Movies
+            .OrderBy(m => m.Title)
+            .ToList();
 
-    // POST: processes the movie form submission
+        return View(movies);
+    }
+
+    // =========================
+    // ADD (GET)
+    // Shows empty form
+    // =========================
+    [HttpGet]
+    public IActionResult MovieForm()
+    {
+        // Load category dropdown
+        LoadCategories();
+
+        // Send empty movie object to form
+        return View(new Movie());
+    }
+
+    // =========================
+    // ADD (POST)
+    // Saves new movie
+    // =========================
     [HttpPost]
     public IActionResult MovieForm(Movie movie)
     {
-        // If validation fails, reload the form with existing data
+        LoadCategories();
+
+        // If validation fails, redisplay form with errors
         if (!ModelState.IsValid)
             return View(movie);
 
-        // Save the movie to the SQLite database
+        // Add movie to database
         _context.Movies.Add(movie);
         _context.SaveChanges();
 
-        // Show confirmation page after successful submission
-        return View("Confirmation", movie);
+        // Redirect back to list after saving
+        return RedirectToAction("MovieList");
+    }
+
+    // =========================
+    // EDIT (GET)
+    // Loads existing movie
+    // =========================
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        LoadCategories();
+
+        // Find movie by ID
+        var movie = _context.Movies.FirstOrDefault(m => m.MovieId == id);
+
+        // If not found, return 404
+        if (movie == null) return NotFound();
+
+        return View(movie);
+    }
+
+    // =========================
+    // EDIT (POST)
+    // Updates movie in database
+    // =========================
+    [HttpPost]
+    public IActionResult Edit(Movie movie)
+    {
+        LoadCategories();
+
+        // If validation fails, show form again
+        if (!ModelState.IsValid)
+            return View(movie);
+
+        // Update movie record
+        _context.Movies.Update(movie);
+        _context.SaveChanges();
+
+        return RedirectToAction("MovieList");
+    }
+
+    // =========================
+    // DELETE (GET)
+    // Shows confirmation page
+    // =========================
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var movie = _context.Movies.FirstOrDefault(m => m.MovieId == id);
+
+        if (movie == null) return NotFound();
+
+        return View(movie);
+    }
+
+    // =========================
+    // DELETE (POST)
+    // Removes movie from database
+    // =========================
+    [HttpPost]
+    public IActionResult DeleteConfirmed(int movieId)
+    {
+        var movie = _context.Movies.FirstOrDefault(m => m.MovieId == movieId);
+
+        if (movie == null) return NotFound();
+
+        // Remove and save changes
+        _context.Movies.Remove(movie);
+        _context.SaveChanges();
+
+        return RedirectToAction("MovieList");
+    }
+
+    // =========================
+    // Loads category dropdown list
+    // Used in Add and Edit forms
+    // =========================
+    private void LoadCategories()
+    {
+        ViewBag.Categories = _context.Categories
+            .OrderBy(c => c.CategoryName)
+            .Select(c => new SelectListItem
+            {
+                Value = c.CategoryId.ToString(),
+                Text = c.CategoryName
+            })
+            .ToList();
     }
 }
+
+

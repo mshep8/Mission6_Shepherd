@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using Mission6_Shepherd.Models.Forms;
-
+using Mission6_Shepherd.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<MovieContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("Connection"))
-);
+    options.UseSqlite(builder.Configuration.GetConnectionString("Connection")));
 
 var app = builder.Build();
 
@@ -19,15 +17,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
 app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
